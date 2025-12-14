@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/ConsoleApps/">
+    <Project Path="ConsoleApps/HttpRequestHandler/HttpRequestHandler.csproj" Id="1531ee40-2e65-4a0d-b9e6-0513f4097f12" />
+  </Folder>
   <Folder Name="/StimulsoftGenerator/">
     <Project Path="StimulsoftGenerator/WCFApplication/WCFApplication.csproj" Id="91da65b2-91c3-473b-9ea1-b9060ed12b69" />
     <Project Path="StimulsoftGenerator/WCFWebApi/WCFWebApi.csproj" Id="cbd763ee-7704-44ce-888f-3ea5abb8da1f" />
