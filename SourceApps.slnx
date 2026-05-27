@@ -1,6 +1,13 @@
 <Solution>
+  <Folder Name="/Apps/">
+    <Project Path="Apps/SwaggerLibrary/SwaggerLibrary.csproj" Id="93f34e89-bdd9-49ac-b758-f4f1ab14d4b6" />
+  </Folder>
   <Folder Name="/ConsoleApps/">
     <Project Path="ConsoleApps/HttpRequestHandler/HttpRequestHandler.csproj" Id="1531ee40-2e65-4a0d-b9e6-0513f4097f12" />
+  </Folder>
+  <Folder Name="/SoapParser/">
+    <Project Path="SoapParser/SoapParserWCF/SoapParserWCF.csproj" Id="0827498c-c7f4-41cb-8d92-a6f7eafad0dd" />
+    <Project Path="SoapParser/SoapParserWebApi/SoapParserWebApi.csproj" Id="5301f872-6b80-4b37-8e35-976f094890d7" />
   </Folder>
   <Folder Name="/StimulsoftGenerator/">
     <Project Path="StimulsoftGenerator/WCFApplication/WCFApplication.csproj" Id="91da65b2-91c3-473b-9ea1-b9060ed12b69" />
