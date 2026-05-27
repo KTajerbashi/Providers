@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SoapParserWCF.SoapParser" CodeBehind="SoapParser.svc.cs" %>
