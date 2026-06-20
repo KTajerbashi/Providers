@@ -1,23 +1,36 @@
-﻿<div class="card">
-    <h1>{{ vm.title }}</h1>
+﻿
+<div class="app-page">
+    <div class="app-page-header">
 
-    <p ng-if="vm.loading">در حال بارگذاری...</p>
-    <p ng-if="vm.error" class="error">{{ vm.error }}</p>
+    </div>
+    <div class="app-page-content">
+        <div class="card">
+            <h1>{{ vm.title }}</h1>
 
-    <table ng-if="!vm.loading && vm.users.length">
-        <thead>
-            <tr>
-                <th>شناسه</th>
-                <th>نام</th>
-                <th>ایمیل</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="user in vm.users">
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <p ng-if="vm.loading">در حال بارگذاری...</p>
+            <p ng-if="vm.error" class="error">{{ vm.error }}</p>
+
+            <table class="app-table app-table-hover" ng-if="!vm.loading && vm.users.length">
+                <thead>
+                    <tr>
+                        <th>شناسه</th>
+                        <th>نام</th>
+                        <th>ایمیل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in vm.users">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="app-page-footer">
+
+    </div>
 </div>
+
+

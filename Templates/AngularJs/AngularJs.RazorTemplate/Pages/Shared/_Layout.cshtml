@@ -16,28 +16,48 @@
     <link href="~/app/assets/css/app.style.css" rel="stylesheet" />
 
 </head>
-<body>
+<body class="app-page">
 
-   <div class="app-razor-page">
-        @RenderBody()
-   </div>
+    <!-- navbar حالا یک directive مستقل است؛ در همه‌ی صفحات ثابت می‌ماند -->
+    <app-navbar></app-navbar>
 
-    <div ng-view></div>
+    <div class="app-layout">
+        <!-- sidebar هم directive مستقل است -->
+        <app-sidebar></app-sidebar>
+
+        <main role="main" class="app-content">
+            <!-- Index.cshtml محتوای خالی دارد؛ Razor صدا زدن RenderBody را الزامی می‌کند -->
+            @RenderBody()
+
+            <!-- فقط همین بخش با تغییر route عوض می‌شود -->
+            <div ng-view></div>
+        </main>
+    </div>
+
+    <!-- footer هم directive مستقل است -->
+    <app-footer></app-footer>
 
     <script src="~/lib/angularjs/angular.min.js"></script>
     <script src="~/lib/angularjs/angular-route.min.js"></script>
 
-
+    @* Angular Starter Application  *@
     <script src="~/app/app.js"></script>
+
+    @* Controllers *@
     <script src="~/app/pages/home/home.controller.js"></script>
     <script src="~/app/pages/about/about.controller.js"></script>
     <script src="~/app/pages/users/users.controller.js"></script>
 
+    @* Directives *@
+    <script src="~/app/directives/navbar/navbar.directive.js"></script>
+    <script src="~/app/directives/sidebar/sidebar.directive.js"></script>
+    <script src="~/app/directives/footer/footer.directive.js"></script>
 
-
+    @* Libraries *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

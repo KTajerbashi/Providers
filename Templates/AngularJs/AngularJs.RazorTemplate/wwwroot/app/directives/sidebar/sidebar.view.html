@@ -1,0 +1,10 @@
+﻿<aside class="app-sidebar">
+    <ul class="sidebar-menu">
+        <li ng-repeat="item in vm.menuItems" ng-class="{ active: vm.isActive(item.path) }">
+            <a href="#!{{ item.path }}">
+                <i class="bi" ng-class="item.icon"></i>
+                <span>{{ item.label }}</span>
+            </a>
+        </li>
+    </ul>
+</aside>
