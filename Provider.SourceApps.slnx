@@ -13,6 +13,10 @@
     <Project Path="StimulsoftGenerator/WCFApplication/WCFApplication.csproj" Id="91da65b2-91c3-473b-9ea1-b9060ed12b69" />
     <Project Path="StimulsoftGenerator/WCFWebApi/WCFWebApi.csproj" Id="cbd763ee-7704-44ce-888f-3ea5abb8da1f" />
   </Folder>
+  <Folder Name="/Templates/" />
+  <Folder Name="/Templates/AngularJs/">
+    <Project Path="Templates/AngularJs/AngularJs.RazorTemplate/AngularJs.RazorTemplate.csproj" Id="ec18da66-82df-434c-8856-f08fd12b8360" />
+  </Folder>
   <Folder Name="/WCF/">
     <Project Path="WCF/WCFService/" Type="Website" DisplayName="WCFService">
       <BuildType Project="Debug" />

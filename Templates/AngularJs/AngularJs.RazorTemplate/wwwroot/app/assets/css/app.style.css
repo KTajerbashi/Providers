@@ -1,0 +1,206 @@
+﻿.app-razor-page {
+    background: red;
+    padding: 10px;
+}
+
+/* Base Container Styles */
+.app-container {
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: black;
+}
+
+/* Main Content Area */
+.app-content {
+    flex: 1;
+    padding: 20px 0;
+    width: 100%;
+    position: relative;
+}
+
+/* Card Component */
+.app-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid #e8e8e8;
+}
+
+    /* Card Hover Effect */
+    .app-card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    /* Card Variants */
+    .app-card.primary {
+        border-left: 4px solid #1890ff;
+    }
+
+    .app-card.success {
+        border-left: 4px solid #52c41a;
+    }
+
+    .app-card.warning {
+        border-left: 4px solid #faad14;
+    }
+
+    .app-card.danger {
+        border-left: 4px solid #ff4d4f;
+    }
+
+/* Card Header */
+.app-card-header {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+    font-size: 18px;
+    color: #262626;
+}
+
+/* Card Body */
+.app-card-body {
+    color: #4a4a4a;
+    line-height: 1.6;
+}
+
+/* Card Footer */
+.app-card-footer {
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Container Variants */
+.app-container.fluid {
+    max-width: 100%;
+    padding: 20px 30px;
+}
+
+.app-container.narrow {
+    max-width: 800px;
+}
+
+/* Content Variants */
+.app-content.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-content.padded {
+    padding: 40px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 15px;
+    }
+
+    .app-content {
+        padding: 15px 0;
+    }
+
+    .app-card {
+        padding: 16px;
+        margin-bottom: 15px;
+    }
+
+    .app-card-header {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-container {
+        padding: 10px;
+    }
+
+    .app-content {
+        padding: 10px 0;
+    }
+
+    .app-card {
+        padding: 12px;
+        border-radius: 6px;
+    }
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .app-card {
+        background: #1f1f1f;
+        border-color: #303030;
+        color: #e8e8e8;
+    }
+
+    .app-card-header {
+        border-bottom-color: #303030;
+        color: #e8e8e8;
+    }
+
+    .app-card-footer {
+        border-top-color: #303030;
+    }
+
+    .app-card-body {
+        color: #d9d9d9;
+    }
+
+    .app-card.primary {
+        border-left-color: #177ddc;
+    }
+
+    .app-card.success {
+        border-left-color: #49aa19;
+    }
+
+    .app-card.warning {
+        border-left-color: #d48806;
+    }
+
+    .app-card.danger {
+        border-left-color: #d32029;
+    }
+}
