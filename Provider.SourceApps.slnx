@@ -17,6 +17,9 @@
   <Folder Name="/Templates/AngularJs/">
     <Project Path="Templates/AngularJs/AngularJs.RazorTemplate/AngularJs.RazorTemplate.csproj" Id="ec18da66-82df-434c-8856-f08fd12b8360" />
   </Folder>
+  <Folder Name="/Templates/UpVersion/">
+    <Project Path="Templates/UpVersion/UpVersion.WebApp/UpVersion.WebApp.csproj" Id="ac0fce57-0d81-438d-80d1-e74fd4719473" />
+  </Folder>
   <Folder Name="/WCF/">
     <Project Path="WCF/WCFService/" Type="Website" DisplayName="WCFService">
       <BuildType Project="Debug" />
