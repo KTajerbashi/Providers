@@ -1,0 +1,106 @@
+﻿@using Microsoft.EntityFrameworkCore
+@using UnitOfWork.WebApp.Application.Repositories
+@using UnitOfWork.WebApp.Domain
+@inject IGroupRepository GroupRepository
+
+<h4>Groups</h4>
+
+<div class="card p-3">
+
+    <InputText class="form-control"
+               @bind-Value="GroupTitle" />
+
+    <InputText class="form-control mt-2"
+               @bind-Value="GroupKey" />
+
+    <button class="btn btn-success mt-2"
+            @onclick="CreateGroup">
+        Create Group
+    </button>
+
+</div>
+
+<hr />
+
+<h5>Assign UserRole To Group</h5>
+
+<InputSelect class="form-select"
+             @bind-Value="SelectedUserRoleId">
+
+    @foreach (var userRole in UserRoles)
+    {
+        <option value="@userRole.EntityId">
+            @userRole.UserEntity.Username -
+            @userRole.RoleEntity.Title
+        </option>
+    }
+
+</InputSelect>
+
+<InputSelect class="form-select mt-2"
+             @bind-Value="SelectedGroupId">
+
+    @foreach (var group in Groups)
+    {
+        <option value="@group.EntityId">
+            @group.Title
+        </option>
+    }
+
+</InputSelect>
+
+<button class="btn btn-primary mt-2"
+        @onclick="AssignGroup">
+    Assign Group
+</button>
+
+@code {
+
+    private List<GroupEntity> Groups = [];
+    private List<UserRoleEntity> UserRoles = [];
+
+    private string GroupTitle = "";
+    private string GroupKey = "";
+
+    private Guid SelectedUserRoleId;
+    private Guid SelectedGroupId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Groups = await GroupRepository.GetAsync(CancellationToken.None);
+
+        UserRoles = (await GroupRepository.GetAsync(
+            include: x => x
+                .Include(x => x.UserRoleGroups).ThenInclude(x => x.UserRoleEntity)
+        )).SelectMany(x => x.UserRoleGroups).Select(x => x.UserRoleEntity).ToList();
+    }
+
+    private async Task CreateGroup()
+    {
+        await GroupRepository.AddAsync(
+            new GroupEntity(GroupTitle, GroupKey));
+
+        await GroupRepository.SaveChangesAsync();
+
+        Groups = await GroupRepository.GetAsync(CancellationToken.None);
+    }
+
+    private async Task AssignGroup()
+    {
+        var userRole = (await GroupRepository.GetAsync(
+            include: x => x
+                .Include(x => x.UserRoleGroups).ThenInclude(x => x.UserRoleEntity)
+        ))
+        .SelectMany(x => x.UserRoleGroups)
+        .Select(x => x.UserRoleEntity)
+        .FirstOrDefault(x => x.UserEntity.UserRoles.Any(y => y.EntityId == SelectedUserRoleId));
+
+        var group = await GroupRepository.Aggregates.FirstOrDefaultAsync(x => x.EntityId == SelectedGroupId);
+
+        var entity = new UserRoleGroupEntity(userRole.Id, group.Id);
+
+        group.AddUserRole(entity);
+
+        await GroupRepository.SaveChangesAsync();
+    }
+}

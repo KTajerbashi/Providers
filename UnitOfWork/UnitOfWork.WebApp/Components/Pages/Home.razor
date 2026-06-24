@@ -1,0 +1,123 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@using UnitOfWork.WebApp.Domain
+@using UnitOfWork.WebApp.Application.Repositories;
+
+@inject IUserRepository UserRepository;
+
+<h3>Users</h3>
+
+<button class="btn btn-success mb-3"
+        @onclick="CreateUser">
+    Add User
+</button>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Username</th>
+            <th>IsActive</th>
+            <th>IsDeleted</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Username</td>
+                <td>@(user.IsActive ? "Active" : "Deactive")</td>
+                <td>@(user.IsDeleted ? "Deleted" : "Not Deleted")</td>
+                <td>
+                    <button class="btn btn-warning"
+                            @onclick="() => EditUser(user)">
+                        Edit
+                    </button>
+
+                    <button class="btn btn-danger"
+                            @onclick="() => DeleteUser(user.EntityId)">
+                        Delete
+                    </button>
+
+                    <button class="btn btn-success"
+                            @onclick="() => Restore(user.EntityId)">
+                        Restore
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    private List<UserEntity> Users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    private async Task LoadUsers()
+    {
+        Users = await UserRepository.GetAsync(CancellationToken.None);
+    }
+
+    private async Task CreateUser()
+    {
+        var user = new UserEntity("Kamran", "Tajerbashi", "kamran", "123456");
+
+        await UserRepository.AddAsync(user);
+
+        await UserRepository.SaveChangesAsync();
+
+        await LoadUsers();
+    }
+
+    private async Task EditUser(UserEntity user)
+    {
+        user.Update(
+            $"Updated ON {DateTime.Now}",
+            user.LastName,
+            user.Username);
+
+        await UserRepository.SaveChangesAsync();
+
+        await LoadUsers();
+    }
+
+    private async Task DeleteUser(Guid id)
+    {
+        var user = await UserRepository.GetAsync(id);
+
+        if (user is null)
+            return;
+
+        user.Delete();
+
+        await UserRepository.SaveChangesAsync();
+
+        await LoadUsers();
+    }
+
+    private async Task Restore(Guid id)
+    {
+        var user = await UserRepository.GetAsync(id);
+
+        if (user is null)
+            return;
+
+        user.Restore();
+
+        await UserRepository.SaveChangesAsync();
+
+        await LoadUsers();
+    }
+}
