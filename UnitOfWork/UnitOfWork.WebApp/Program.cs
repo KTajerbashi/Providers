@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SwaggerLibrary;
 using UnitOfWork.WebApp.Components;
 using UnitOfWork.WebApp.Infrastructure;
 using UnitOfWork.WebApp.Provider;
@@ -17,7 +18,22 @@ namespace UnitOfWork.WebApp
                     builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddControllers();
+
             builder.Services.AddAggregateRepository();
+
+            builder.Services.AddSwaggerLibrary(new()
+            {
+                Title = "Unit Of Work",
+                Version = "v1",
+                Description = "Unit Of Work Api",
+                Summary = "UNIT_OF_WORK",
+                License = new() { Name = "MIT", Url = new("https://google.com"), Identifier = "" },
+                Contact = new() { Name = "Google", Email = "google@gamil.com", Url = new("https://google.com") },
+            }, config =>
+            {
+
+            });
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
@@ -33,12 +49,17 @@ namespace UnitOfWork.WebApp
                 app.UseHsts();
             }
 
+            app.UseSwaggerLibrary("Unit Of Work");
+
             app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
             app.UseHttpsRedirection();
 
             app.UseAntiforgery();
 
             app.MapStaticAssets();
+
+            app.MapControllers();   // <-- Add this
+
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 

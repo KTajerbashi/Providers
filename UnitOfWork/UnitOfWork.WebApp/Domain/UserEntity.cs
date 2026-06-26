@@ -41,9 +41,16 @@ public class UserEntity : AggregateRoot
     private readonly List<UserRoleEntity> _userRoles = new();
     public virtual IReadOnlyCollection<UserRoleEntity> UserRoles => _userRoles;
 
-    public void AddUserRole(UserRoleEntity entity)
+    public UserRoleEntity AssignRole(RoleEntity role)
     {
-        _userRoles.Add(entity);
+        if (_userRoles.Any(x => x.RoleId == role.Id))
+            throw new InvalidOperationException("Role already assigned.");
+
+        var userRole = new UserRoleEntity(Id, role.Id);
+
+        _userRoles.Add(userRole);
+
+        return userRole;
     }
 }
 
@@ -83,6 +90,18 @@ public class UserRoleEntity : Entity
 
     private readonly List<UserRoleGroupEntity> _userRoleGroups = new();
     public virtual IReadOnlyCollection<UserRoleGroupEntity> UserRoleGroups => _userRoleGroups;
+
+    public UserRoleGroupEntity AssignGroup(GroupEntity group)
+    {
+        if (_userRoleGroups.Any(x => x.GroupId == group.Id))
+            throw new InvalidOperationException("Group already assigned.");
+
+        var userRoleGroup = new UserRoleGroupEntity(Id, group.Id);
+
+        _userRoleGroups.Add(userRoleGroup);
+
+        return userRoleGroup;
+    }
 }
 
 [Table("Groups", Schema = "Security")]
@@ -101,9 +120,19 @@ public class GroupEntity : AggregateRoot
 
     private readonly List<GroupPrivilegeEntity> _groupPrivileges = new();
     public virtual IReadOnlyCollection<GroupPrivilegeEntity> GroupPrivileges => _groupPrivileges;
-    public void AddUserRole(UserRoleGroupEntity entity)
+    public void AddUserRole(int userRoleId)
     {
-        _userRoleGroups.Add(entity);
+        if (_userRoleGroups.Any(x => x.UserRoleId == userRoleId))
+            return;
+
+        _userRoleGroups.Add(new(userRoleId, Id));
+    }
+    public void AddPrivilege(PrivilegeEntity privilege)
+    {
+        if (_groupPrivileges.Any(x => x.PrivilegeId == privilege.Id))
+            return;
+
+        _groupPrivileges.Add(new GroupPrivilegeEntity(Id, privilege.Id));
     }
 }
 
@@ -131,6 +160,13 @@ public class PrivilegeEntity : AggregateRoot
 {
     public string Title { get; private set; }
     public string Command { get; private set; }
+    private PrivilegeEntity() { }
+
+    public PrivilegeEntity(string title, string command)
+    {
+        Title = title;
+        Command = command;
+    }
 
     private readonly List<GroupPrivilegeEntity> _groupPrivileges = new();
     public virtual IReadOnlyCollection<GroupPrivilegeEntity> GroupPrivileges => _groupPrivileges;
@@ -138,6 +174,16 @@ public class PrivilegeEntity : AggregateRoot
 [Table("GroupPrivileges", Schema = "Security")]
 public class GroupPrivilegeEntity : Entity
 {
+    private GroupPrivilegeEntity()
+    {
+
+    }
+    public GroupPrivilegeEntity(int groupId, int privilegeId)
+    {
+        GroupId = groupId;
+        PrivilegeId = privilegeId;
+    }
+
     public int GroupId { get; private set; }
     public virtual GroupEntity GroupEntity { get; private set; }
 

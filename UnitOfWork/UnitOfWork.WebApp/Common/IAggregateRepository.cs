@@ -31,7 +31,7 @@ public abstract class AggregateRepository<TAggregate> : UnitOfWork<DataContext>,
     public IQueryable<TAggregate> Aggregates => SetEntity.AsQueryable();
     public async Task<List<TAggregate>> GetAsync(Expression<Func<TAggregate, bool>>? predicate = null, Func<IQueryable<TAggregate>, IIncludableQueryable<TAggregate, object>>? include = null, bool asNoTracking = true)
     {
-        IQueryable<TAggregate> query = context.Set<TAggregate>();
+        IQueryable<TAggregate> query = _context.Set<TAggregate>();
 
         if (asNoTracking)
             query = query.AsNoTracking();
@@ -49,7 +49,7 @@ public abstract class AggregateRepository<TAggregate> : UnitOfWork<DataContext>,
         aggregate.EntityId = Guid.NewGuid();
         aggregate.IsDeleted = false;
         aggregate.IsActive = true;
-        var record = await context.AddAsync(aggregate, cancellationToken);
+        var record = await _context.AddAsync(aggregate, cancellationToken);
         return record.Entity.EntityId;
     }
 
@@ -57,5 +57,7 @@ public abstract class AggregateRepository<TAggregate> : UnitOfWork<DataContext>,
         => await SetEntity.FirstOrDefaultAsync(x => x.EntityId == entityId, cancellationToken);
 
     public async Task<List<TAggregate>> GetAsync(CancellationToken cancellationToken = default)
-       => await SetEntity.ToListAsync(cancellationToken);
+       => 
+        
+        await SetEntity.ToListAsync(cancellationToken);
 }

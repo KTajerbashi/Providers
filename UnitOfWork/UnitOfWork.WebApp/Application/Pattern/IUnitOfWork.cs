@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using UnitOfWork.WebApp.Infrastructure;
 
 namespace UnitOfWork.WebApp.Application.Pattern;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable, IAsyncDisposable
 {
     Task BeginTransactionAsync(CancellationToken cancellation = default);
     Task CommitTransactionAsync(CancellationToken cancellation = default);
@@ -11,22 +13,60 @@ public interface IUnitOfWork
 }
 
 public abstract class UnitOfWork<TContext> : IUnitOfWork
-    where TContext : DbContext
+    where TContext : DataContext
 {
-    protected readonly TContext context;
+    protected readonly TContext _context;
     protected UnitOfWork(TContext context)
     {
-        this.context = context;
+        _context = context;
     }
-    public async Task BeginTransactionAsync(CancellationToken cancellation)
-        => await context.Database.BeginTransactionAsync(cancellation);
 
-    public async Task CommitTransactionAsync(CancellationToken cancellation)
-        => await context.Database.CommitTransactionAsync(cancellation);
+    public async Task BeginTransactionAsync(CancellationToken cancellation = default)
+    {
+        if (_context._transaction != null)
+            throw new InvalidOperationException("Transaction already started.");
 
-    public async Task RollbackTransactionAsync(CancellationToken cancellation)
-        => await context.Database.RollbackTransactionAsync(cancellation);
+        _context._transaction = await _context.Database.BeginTransactionAsync(cancellation);
+    }
 
-    public async Task SaveChangesAsync(CancellationToken cancellation)
-        => await context.SaveChangesAsync(cancellation);
+    public async Task SaveChangesAsync(CancellationToken cancellation = default)
+    {
+        await _context.SaveChangesAsync(cancellation);
+    }
+
+    public async Task CommitTransactionAsync(CancellationToken cancellation = default)
+    {
+        if (_context._transaction == null)
+            throw new InvalidOperationException("No active transaction.");
+
+        await _context.SaveChangesAsync(cancellation);
+        await _context._transaction.CommitAsync(cancellation);
+        await _context._transaction.DisposeAsync();
+
+        _context._transaction = null;
+    }
+
+    public async Task RollbackTransactionAsync(CancellationToken cancellation = default)
+    {
+        if (_context._transaction == null)
+            return;
+
+        await _context._transaction.RollbackAsync(cancellation);
+        await _context._transaction.DisposeAsync();
+
+        _context._transaction = null;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_context._transaction != null)
+            await _context._transaction.DisposeAsync();
+
+        await _context.DisposeAsync();
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
 }

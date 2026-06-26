@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using UnitOfWork.WebApp.Domain;
 
 namespace UnitOfWork.WebApp.Infrastructure;
 
 public class DataContext : DbContext
 {
+    public IDbContextTransaction? _transaction;
     public DataContext(DbContextOptions<DataContext> options)
        : base(options)
     {

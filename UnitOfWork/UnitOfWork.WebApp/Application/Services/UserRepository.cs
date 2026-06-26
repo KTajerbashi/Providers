@@ -9,6 +9,7 @@ public class UserRepository : AggregateRepository<UserEntity>, IUserRepository
 {
     public UserRepository(DataContext context) : base(context)
     {
+        Console.WriteLine($"UserRepository : {context.ContextId.InstanceId.ToString()}");
     }
 }
 

@@ -97,9 +97,7 @@
 
         var group = await GroupRepository.Aggregates.FirstOrDefaultAsync(x => x.EntityId == SelectedGroupId);
 
-        var entity = new UserRoleGroupEntity(userRole.Id, group.Id);
-
-        group.AddUserRole(entity);
+        group.AddUserRole(userRole.Id);
 
         await GroupRepository.SaveChangesAsync();
     }

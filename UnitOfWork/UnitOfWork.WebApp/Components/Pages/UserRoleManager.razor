@@ -67,10 +67,7 @@
         var user = await UserRepository.GetAsync(SelectedUserId);
         var role = await RoleRepository.GetAsync(SelectedRoleId);
 
-
-        var userRole = new UserRoleEntity(user.Id, role.Id);
-
-        user.AddUserRole(userRole);
+        user.AssignRole(role);
 
         await UserRepository.SaveChangesAsync();
     }

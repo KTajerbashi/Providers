@@ -9,6 +9,7 @@ public class PrivilegeRepository : AggregateRepository<PrivilegeEntity>, IPrivil
 {
     public PrivilegeRepository(DataContext context) : base(context)
     {
+        Console.WriteLine($"PrivilegeRepository : {context.ContextId.InstanceId.ToString()}");
     }
 }
 

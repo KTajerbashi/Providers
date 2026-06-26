@@ -12,8 +12,14 @@ public interface IEntity
 public abstract class Entity : IEntity
 {
     public int Id { get; set; }
+    public Guid EntityId { get; set; } = Guid.NewGuid();
 
-    public Guid EntityId { get; set; }
+    protected Entity()
+    {
+        IsActive = true;
+        IsDeleted = false;
+    }
+
 
     public bool IsDeleted { get; set; }
 

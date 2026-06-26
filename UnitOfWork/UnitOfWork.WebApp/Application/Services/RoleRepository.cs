@@ -9,6 +9,7 @@ public class RoleRepository : AggregateRepository<RoleEntity>, IRoleRepository
 {
     public RoleRepository(DataContext context) : base(context)
     {
+        Console.WriteLine($"RoleRepository : {context.ContextId.InstanceId.ToString()}");
     }
 }
 

@@ -9,6 +9,7 @@ public class GroupRepository : AggregateRepository<GroupEntity>, IGroupRepositor
 {
     public GroupRepository(DataContext context) : base(context)
     {
+        Console.WriteLine($"GroupRepository : {context.ContextId.InstanceId.ToString()}");
     }
 }
 
