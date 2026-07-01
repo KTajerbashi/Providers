@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SoapParser;
+using SoapParserWebApi.Extensions;
 using SoapParserWebApi.Models;
 using System.Text;
 using System.Xml;
@@ -91,6 +93,15 @@ namespace SoapParserWebApi.Controllers
                         return responseContent;
                     }
                 }
+            }
+        }
+        private async Task<UserModel> CallInterSoapParser()
+        {
+            using (var client = new SoapParserClient())
+            {
+                var response = await client.GetUserInfoAsync("15123456123");
+
+                return response;
             }
         }
 
@@ -192,6 +203,13 @@ namespace SoapParserWebApi.Controllers
             }
         }
 
+        [HttpPost("read-internal-structure")]
+        public async Task<IActionResult> ReadSoapStructure()
+        {
+            var response = await CallInterSoapParser();
+
+            return Ok(response);
+        }
         [HttpPost("read-structure")]
         public async Task<IActionResult> ReadSoapStructure([FromBody] ReadSoapStructureRequest request)
         {

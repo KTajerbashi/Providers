@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace SoapParserWCF
@@ -16,6 +17,9 @@ namespace SoapParserWCF
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
+
+        [OperationContract]
+        UserModel GetUserInfo(string nationalCode);
 
     }
 
@@ -40,5 +44,71 @@ namespace SoapParserWCF
             get { return stringValue; }
             set { stringValue = value; }
         }
+    }
+
+    [DataContract]
+    public class UserModel
+    {
+        private string username;
+        private string password;
+        private bool isActive;
+        private string mobile;
+        private int age;
+        private List<Address> addresses;
+
+        [DataMember]
+        public string Username
+        {
+            get { return username; }
+            set { username = value; }
+        }
+
+        [DataMember]
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
+        [DataMember]
+        public bool IsActive
+        {
+            get { return isActive; }
+            set { isActive = value; }
+        }
+
+        [DataMember]
+        public string Mobile
+        {
+            get { return mobile; }
+            set { mobile = value; }
+        }
+
+        [DataMember]
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+        [DataMember]
+        public List<Address> Addresses
+        {
+            get { return addresses; }
+            set { addresses = value; }
+        }
+    }
+
+    [DataContract]
+    public class Address
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Pelak { get; set; }
+
+        [DataMember]
+        public string HouseNumber { get; set; }
     }
 }

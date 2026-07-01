@@ -1,0 +1,31 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://localhost:2711/SoapParser.svc?wsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, SoapParser"
+    ],
+    "references": [
+      "F:\\Projects\\GitHub\\KTajerbashi\\Providers\\SoapParser\\SoapParserWebApi\\bin\\Debug\\net10.0\\SwaggerLibrary.dll",
+      "Microsoft.AspNetCore.OpenApi, {Microsoft.AspNetCore.OpenApi, 10.0.9}",
+      "Microsoft.OpenApi, {Microsoft.OpenApi, 2.7.5}",
+      "Microsoft.Web.Infrastructure, {Microsoft.Web.Infrastructure, 1.0.0}",
+      "Newtonsoft.Json, {Newtonsoft.Json, 7.0.1}",
+      "Swashbuckle.AspNetCore.Swagger, {Swashbuckle.AspNetCore.Swagger, 10.2.2}",
+      "Swashbuckle.AspNetCore.SwaggerGen, {Swashbuckle.AspNetCore.SwaggerGen, 10.2.2}",
+      "Swashbuckle.AspNetCore.SwaggerUI, {Swashbuckle.AspNetCore.SwaggerUI, 10.2.2}",
+      "Swashbuckle.Core, {Swashbuckle.Core, 5.6.0}",
+      "System.Net.Http.Formatting, {Microsoft.AspNet.WebApi.Client, 4.0.20710}",
+      "System.Web.Http, {Microsoft.AspNet.WebApi.Core, 4.0.20710}",
+      "System.Web.Http.WebHost, {Microsoft.AspNet.WebApi.WebHost, 4.0.20710}",
+      "WebActivatorEx, {WebActivatorEx, 2.0.0}"
+    ],
+    "targetFramework": "net10.0",
+    "typeReuseMode": "All"
+  }
+}

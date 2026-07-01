@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoapParserWCF.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -111,6 +112,7 @@ namespace SoapParserWCF.ProxyRepository
                     }
                     else
                     {
+                        return;
                         // TODO: ex: system.string[] ro ham support kon
                         throw new Exception(string.Format(ErrorTypeMessage, item.Name, item.PropertyType.ToString(), info.Name));
                     }

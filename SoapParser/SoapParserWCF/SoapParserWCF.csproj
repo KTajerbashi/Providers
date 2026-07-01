@@ -71,6 +71,7 @@
     <Compile Include="Exceptions\AppException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Models\WebServiceModel.cs" />
     <Compile Include="ProxyFactory\ProxyFactory.cs" />
     <Compile Include="ProxyFactory\SchemaInjection.cs" />
     <Compile Include="ProxyRepository\ProxyMember.cs" />

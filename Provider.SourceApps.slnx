@@ -6,6 +6,7 @@
     <Project Path="ConsoleApps/HttpRequestHandler/HttpRequestHandler.csproj" Id="1531ee40-2e65-4a0d-b9e6-0513f4097f12" />
   </Folder>
   <Folder Name="/SoapParser/">
+    <Project Path="SoapParser/SoapParserApi/SoapParserApi.csproj" Id="296ef556-07f0-421b-bb85-baaf2224d823" />
     <Project Path="SoapParser/SoapParserWCF/SoapParserWCF.csproj" Id="0827498c-c7f4-41cb-8d92-a6f7eafad0dd" />
     <Project Path="SoapParser/SoapParserWebApi/SoapParserWebApi.csproj" Id="5301f872-6b80-4b37-8e35-976f094890d7" />
   </Folder>
