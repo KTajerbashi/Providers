@@ -1,5 +1,6 @@
 ﻿using SoapParserApi.Exceptions;
 using SoapParserApi.Extensions;
+using SoapParserApi.ProxyRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 
-namespace SoapParserApi.ProxyRepository
+namespace SoapParserApi.ProxyServices
 {
     public class Proxy
     {

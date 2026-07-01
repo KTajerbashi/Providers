@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Web.Services.Description;
 using System.Xml.Serialization;
 
-namespace SoapParserApi.ProxyFactory
+namespace SoapParserApi.ProxyServices
 {
     public class ProxyFactory
     {

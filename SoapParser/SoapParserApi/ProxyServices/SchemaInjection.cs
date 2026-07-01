@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SoapParserApi.Extensions;
+using System;
+using System.IO;
+using System.Net;
 using System.Web.Services.Description;
 using System.Xml.Schema;
-using System.Net;
-using System.IO;
-using SoapParserApi.Extensions;
 
-namespace SoapParserApi.ProxyFactory
+namespace SoapParserApi.ProxyServices
 {
     public class SchemaInjection
     {
