@@ -1,0 +1,73 @@
+﻿@using UnitOfWork.WebApp.Application.Repositories
+@using UnitOfWork.WebApp.Domain
+@inject IUserRepository UserRepository
+
+<h4>Users</h4>
+
+<div class="card p-3">
+
+    <InputText class="form-control mb-2"
+               @bind-Value="FirstName"
+               placeholder="First Name" />
+
+    <InputText class="form-control mb-2"
+               @bind-Value="LastName"
+               placeholder="Last Name" />
+
+    <InputText class="form-control mb-2"
+               @bind-Value="Username"
+               placeholder="Username" />
+
+    <InputText class="form-control mb-2"
+               @bind-Value="Password"
+               placeholder="Password" />
+
+    <button class="btn btn-primary"
+            @onclick="CreateUser">
+        Create User
+    </button>
+
+</div>
+
+<table class="table mt-3">
+
+    @foreach (var user in Users)
+    {
+        <tr>
+            <td>@user.FirstName</td>
+            <td>@user.LastName</td>
+            <td>@user.Username</td>
+        </tr>
+    }
+
+</table>
+
+@code {
+
+    private List<UserEntity> Users = [];
+
+    private string FirstName = "";
+    private string LastName = "";
+    private string Username = "";
+    private string Password = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await UserRepository.GetAsync(CancellationToken.None);
+    }
+
+    private async Task CreateUser()
+    {
+        var user = new UserEntity(
+            FirstName,
+            LastName,
+            Username,
+            Password);
+
+        await UserRepository.AddAsync(user);
+
+        await UserRepository.SaveChangesAsync();
+
+        Users = await UserRepository.GetAsync(CancellationToken.None);
+    }
+}

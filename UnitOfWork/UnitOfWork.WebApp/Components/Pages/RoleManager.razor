@@ -1,0 +1,54 @@
+﻿@using UnitOfWork.WebApp.Application.Repositories
+@using UnitOfWork.WebApp.Domain
+@inject IRoleRepository RoleRepository
+
+<h4>Roles</h4>
+
+<div class="card p-3">
+
+    <InputText class="form-control mb-2"
+               @bind-Value="Title" />
+
+    <InputText class="form-control mb-2"
+               @bind-Value="Key" />
+
+    <button class="btn btn-success"
+            @onclick="CreateRole">
+        Create Role
+    </button>
+
+</div>
+
+<table class="table mt-3">
+
+    @foreach (var role in Roles)
+    {
+        <tr>
+            <td>@role.Title</td>
+            <td>@role.Key</td>
+        </tr>
+    }
+
+</table>
+
+@code {
+
+    private List<RoleEntity> Roles = [];
+
+    private string Title = "";
+    private string Key = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Roles = await RoleRepository.GetAsync(CancellationToken.None);
+    }
+
+    private async Task CreateRole()
+    {
+        await RoleRepository.AddAsync(new RoleEntity(Title,Key));
+
+        await RoleRepository.SaveChangesAsync();
+
+        Roles = await RoleRepository.GetAsync(CancellationToken.None);
+    }
+}

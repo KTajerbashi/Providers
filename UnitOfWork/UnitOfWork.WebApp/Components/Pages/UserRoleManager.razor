@@ -1,0 +1,74 @@
+﻿@using UnitOfWork.WebApp.Application.Repositories
+@using UnitOfWork.WebApp.Domain
+
+
+@inject IUserRepository UserRepository
+@inject IRoleRepository RoleRepository
+
+<h4>Assign Role To User</h4>
+
+<div class="card p-3">
+
+    <InputSelect class="form-select"
+                 @bind-Value="SelectedUserId">
+
+        <option value="">Select User</option>
+
+        @foreach (var user in Users)
+        {
+            <option value="@user.EntityId">
+                @user.FirstName @user.LastName
+            </option>
+        }
+
+    </InputSelect>
+
+    <InputSelect class="form-select mt-2"
+                 @bind-Value="SelectedRoleId">
+
+        <option value="">Select Role</option>
+
+        @foreach (var role in Roles)
+        {
+            <option value="@role.EntityId">
+                @role.Title
+            </option>
+        }
+
+    </InputSelect>
+
+    <button class="btn btn-primary mt-2"
+            @onclick="AssignRole">
+        Assign
+    </button>
+
+</div>
+
+@code {
+
+    private List<UserEntity> Users = [];
+    private List<RoleEntity> Roles = [];
+
+    private Guid SelectedUserId;
+    private Guid SelectedRoleId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var usersTask = UserRepository.GetAsync(CancellationToken.None);
+        var rolesTask = RoleRepository.GetAsync(CancellationToken.None);
+        await Task.WhenAll(usersTask, rolesTask);
+
+        Users = await usersTask;
+        Roles = await rolesTask;
+    }
+
+    private async Task AssignRole()
+    {
+        var user = await UserRepository.GetAsync(SelectedUserId);
+        var role = await RoleRepository.GetAsync(SelectedRoleId);
+
+        user.AssignRole(role);
+
+        await UserRepository.SaveChangesAsync();
+    }
+}

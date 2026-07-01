@@ -1,0 +1,7 @@
+﻿using UnitOfWork.WebApp.Common;
+using UnitOfWork.WebApp.Domain;
+
+namespace UnitOfWork.WebApp.Application.Repositories;
+public interface IPrivilegeRepository : IAggregateRepository<PrivilegeEntity>
+{
+}
