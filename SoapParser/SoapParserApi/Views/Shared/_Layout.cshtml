@@ -1,39 +1,132 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewBag.Title - Modern ASP.NET Dashboard</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+       
+    </style>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg modern-navbar navbar-dark">
         <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+
+            @Html.ActionLink(
+                "ASP.NET Dashboard",
+                "Index",
+                "Home",
+                new { area = "" },
+                new { @class = "navbar-brand navbar-brand-modern" }
+            )
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Home",
+                            "Index",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "About",
+                            "About",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Services",
+                            "Contact",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Contact",
+                            "Contact",
+                            "Home",
+                            new { area = "" },
+                            new { @class = "nav-link" }
+                        )
+                    </li>
+
                 </ul>
+
+                <div class="d-flex align-items-center">
+
+                    <a class="nav-link swagger-btn"
+                       href="/swagger"
+                       target="_blank">
+                        Swagger API
+                    </a>
+
+                </div>
+
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-wrapper">
+
+        <div class="container body-content">
+
+            @RenderBody()
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="modern-footer">
+        <div class="container">
+            <p class="mb-0">
+                © @DateTime.Now.Year - Modern ASP.NET Dashboard
+            </p>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

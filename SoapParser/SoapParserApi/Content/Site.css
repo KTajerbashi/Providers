@@ -1,20 +1,555 @@
-﻿/* Set padding to keep content from hitting the edges */
+﻿/* =========================================================
+   MODERN ASP.NET MVC - SITE.CSS
+   Author: Tajer-K
+   Description:
+   Professional modern base stylesheet for ASP.NET MVC projects
+========================================================= */
+/* =========================================================
+   RESET
+========================================================= */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+:root {
+    /* COLORS */
+    --color-bg: #0f172a;
+    --color-bg-secondary: #111827;
+    --color-surface: rgba(255,255,255,0.05);
+    --color-surface-hover: rgba(255,255,255,0.08);
+    --color-primary: #2563eb;
+    --color-primary-light: #3b82f6;
+    --color-purple: #7c3aed;
+    --color-text: #ffffff;
+    --color-text-muted: #cbd5e1;
+    --color-border: rgba(255,255,255,0.08);
+    /* GRADIENTS */
+    --gradient-primary: linear-gradient(135deg, #2563eb, #7c3aed);
+    /* SHADOWS */
+    --shadow-sm: 0 4px 10px rgba(0,0,0,0.15);
+    --shadow-md: 0 10px 30px rgba(0,0,0,0.25);
+    --shadow-lg: 0 20px 50px rgba(0,0,0,0.35);
+    /* BORDER RADIUS */
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-xl: 28px;
+    /* TRANSITIONS */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.35s ease;
+    /* LAYOUT */
+    --container-width: 1400px;
+}
+
+
+/* =========================================================
+   HTML & BODY
+========================================================= */
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    background: radial-gradient(circle at top left, #1e3a8a, transparent 30%), radial-gradient(circle at bottom right, #7c3aed, transparent 30%), var(--color-bg);
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 16px;
+}
+
+p {
+    line-height: 1.8;
+    color: var(--color-text-muted);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.main-wrapper {
+    flex: 1;
+    width: 100%;
+}
+
 .body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+.modern-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 14px 0;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-border);
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.navbar-brand-modern {
+    color: var(--color-text) !important;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
+
+.navbar-nav .nav-link {
+    margin: 0 6px;
+    padding: 10px 16px !important;
+    color: var(--color-text-muted) !important;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        color: var(--color-text) !important;
+        background: rgba(255,255,255,0.08);
+    }
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+.btn-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    color: var(--color-text) !important;
+    background: var(--gradient-primary);
+    transition: var(--transition-normal);
+    cursor: pointer;
+}
+
+    .btn-modern:hover {
+        transform: translateY(-3px);
+        opacity: 0.95;
+        box-shadow: var(--shadow-md);
+    }
+
+.btn-outline-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--color-text);
+    background: transparent;
+    transition: var(--transition-normal);
+}
+
+    .btn-outline-modern:hover {
+        background: rgba(255,255,255,0.08);
+    }
+
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+.hero-section {
+    padding: 100px 0;
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.hero-subtitle {
+    max-width: 700px;
+    font-size: 18px;
+    line-height: 1.9;
+    margin-bottom: 35px;
+    color: var(--color-text-muted);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+.glass-card,
+.card-modern {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(14px);
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+}
+
+    .glass-card:hover,
+    .card-modern:hover {
+        transform: translateY(-6px);
+        background: var(--color-surface-hover);
+    }
+
+
+/* =========================================================
+   DASHBOARD STATS
+========================================================= */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.stat-card {
+    padding: 30px;
+    text-align: center;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: var(--transition-normal);
+}
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        background: var(--color-surface-hover);
+    }
+
+.stat-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.stat-label {
+    margin-top: 8px;
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+.section-header {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 46px;
+    margin-bottom: 14px;
+}
+
+.section-subtitle {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 17px;
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   FEATURE GRID
+========================================================= */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.feature-card {
+    padding: 35px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: var(--transition-normal);
+}
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        background: var(--color-surface-hover);
+    }
+
+.feature-icon {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.feature-title {
+    margin-bottom: 14px;
+    font-size: 24px;
+}
+
+.feature-description {
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   TABLES
+========================================================= */
+.table-modern {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+    .table-modern thead {
+        background: rgba(255,255,255,0.05);
+    }
+
+    .table-modern th,
+    .table-modern td {
+        padding: 16px 20px;
+        text-align: left;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .table-modern tbody tr:hover {
+        background: rgba(255,255,255,0.03);
+    }
+
+
+/* =========================================================
+   FORMS
+========================================================= */
+.form-control-modern {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
+    color: var(--color-text);
+    transition: var(--transition-fast);
+}
+
+    .form-control-modern:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+    }
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+.modern-footer {
+    margin-top: auto;
+    padding: 25px 0;
+    text-align: center;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.mt-1 {
+    margin-top: 10px;
+}
+
+.mt-2 {
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 30px;
+}
+
+.mt-4 {
+    margin-top: 40px;
+}
+
+.mb-1 {
+    margin-bottom: 10px;
+}
+
+.mb-2 {
+    margin-bottom: 20px;
+}
+
+.mb-3 {
+    margin-bottom: 30px;
+}
+
+.mb-4 {
+    margin-bottom: 40px;
+}
+
+.py-section {
+    padding-top: 50px;
+    padding-bottom: 100px;
+}
+
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+========================================================= */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255,255,255,0.25);
+    }
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 1200px) {
+
+    .hero-title {
+        font-size: 54px;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .navbar-nav {
+        margin-top: 15px;
+    }
+
+    .hero-title {
+        font-size: 46px;
+    }
+
+    .section-title {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .body-content {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .hero-section {
+        padding: 70px 0;
+    }
+
+    .hero-title {
+        font-size: 38px;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .section-title {
+        font-size: 32px;
+    }
+
+    .glass-card,
+    .card-modern,
+    .feature-card {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+
+    .btn-modern,
+    .btn-outline-modern {
+        width: 100%;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+}
+
