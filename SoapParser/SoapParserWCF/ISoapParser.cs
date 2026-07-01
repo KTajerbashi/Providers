@@ -13,9 +13,6 @@ namespace SoapParserWCF
         string GetData(int value);
 
         [OperationContract]
-        string ReadSoapStructure(string endpointUrl, string username, string password, bool isSSLIgnore);
-
-        [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         [OperationContract]

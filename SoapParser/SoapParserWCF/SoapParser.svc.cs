@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using SoapParserWCF.Models;
-using SoapParserWCF.ProxyFactory;
-using SoapParserWCF.ProxyRepository;
 using System;
 using System.Collections.Generic;
 
@@ -49,39 +46,5 @@ namespace SoapParserWCF
             };
         }
 
-        public string ReadSoapStructure(string endpointUrl, string username, string password, bool isSSLIgnore)
-        {
-            ProxyService result = new ProxyFactory.ProxyFactory().ImportService(endpointUrl, username, password, isSSLIgnore);
-            var ss = result.ServiceMethods.Values;
-
-            WebServiceModel aggregate = new WebServiceModel();
-
-            aggregate.Name = result.ServiceName;
-            foreach (var method in result.ServiceMethods)
-            {
-                var record = new WebServiceMethodModel();
-                record.Name = method.Key;
-                foreach (var detail in method.Value.ServiceParameters)
-                {
-                    record.Parameters.Add(new WebServiceParameterModel()
-                    {
-                        Name = detail.Name,
-                        Type = detail.Type.ToString()
-                    });
-                }
-                foreach (var detail in method.Value.ServiceResults)
-                {
-                    record.Results.Add(new WebServiceParameterModel()
-                    {
-                        Name = detail.Name,
-                        Type = detail.Type.ToString()
-                    });
-                }
-                aggregate.Methods.Add(record);
-            }
-
-
-            return JsonConvert.SerializeObject(aggregate);
-        }
     }
 }

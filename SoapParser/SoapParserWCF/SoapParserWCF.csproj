@@ -69,16 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\AppException.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Models\WebServiceModel.cs" />
-    <Compile Include="ProxyFactory\ProxyFactory.cs" />
-    <Compile Include="ProxyFactory\SchemaInjection.cs" />
-    <Compile Include="ProxyRepository\ProxyMember.cs" />
-    <Compile Include="ProxyRepository\ProxyMethod.cs" />
-    <Compile Include="ProxyRepository\ProxyResult.cs" />
-    <Compile Include="ProxyRepository\ProxyService.cs" />
-    <Compile Include="ProxyServices\Proxy.cs" />
     <Compile Include="SoapParser.svc.cs">
       <DependentUpon>SoapParser.svc</DependentUpon>
     </Compile>
