@@ -38,42 +38,106 @@ namespace SoapParserApi.ProxyRepository
         #endregion
 
         #region Methods
-
         private void FindParameters(MethodInfo info)
         {
             foreach (var item in info.GetParameters())
             {
-                var isOutParameter = item.IsOut;
-                if (isOutParameter)
+                // ignore out params
+                if (item.IsOut)
                     continue;
 
-                string TypeName = item.ParameterType.ToString().ToLower();
-                Type pType = item.ParameterType;
-                if ((
-                    pType.IsByRef || item.IsOut ///////////////////////////////////////////////
-                    || pType.IsEnum || pType.IsInterface)
-                    ||
-                    (!TypeName.StartsWith("system.") && TypeName.EndsWith("[]")) ||
-                    (TypeName.StartsWith("system.") && TypeName.EndsWith("[]")))
+                Type parameterType = item.ParameterType;
+
+                // unwrap ref
+                if (parameterType.IsByRef)
+                    parameterType = parameterType.GetElementType();
+
+                // skip unsupported types
+                if (parameterType == null ||
+                    parameterType.IsEnum ||
+                    parameterType.IsInterface ||
+                    parameterType == typeof(Type) ||
+                    parameterType.FullName == "System.RuntimeType")
                 {
-                    // skip to next param
-                    //throw new Exception(string.Format(ErrorTypeMessage, item.Name, item.ParameterType.ToString(), info.Name));
+                    continue;
                 }
-                else if (!TypeName.StartsWith("system."))
+
+                // array skip
+                if (parameterType.IsArray)
+                    continue;
+
+                // system primitive types
+                if (parameterType.Namespace == "System")
                 {
-                    foreach (var prop in pType.GetProperties(BindingFlags.Public))
+                    this.ServiceParameters.Add(
+                        new ProxyMember(item.Name, parameterType));
+
+                    continue;
+                }
+
+                // complex object
+                foreach (var prop in parameterType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                {
+                    // skip indexers
+                    if (prop.GetIndexParameters().Length > 0)
+                        continue;
+
+                    // skip serializer helper properties
+                    if (prop.Name.EndsWith("Specified"))
+                        continue;
+
+                    Type propType = prop.PropertyType;
+
+                    if (propType.IsInterface ||
+                        propType.IsEnum ||
+                        propType.IsArray ||
+                        propType == typeof(Type) ||
+                        propType.FullName == "System.RuntimeType")
                     {
-                        Type propType = prop.PropertyType;
-                        if ((pType.IsByRef || pType.IsEnum || pType.IsInterface) ||
-                            (!TypeName.StartsWith("system.")) ||
-                            (TypeName.StartsWith("system.") && TypeName.EndsWith("[]")))
-                            throw new Exception(string.Format(ErrorTypeMessage, item.Name, item.ParameterType.ToString(), info.Name));
-                        else this.ServiceParameters.Add(new ProxyMember(prop.Name, prop.PropertyType));
+                        continue;
                     }
+
+                    this.ServiceParameters.Add(
+                        new ProxyMember(prop.Name, propType));
                 }
-                else this.ServiceParameters.Add(new ProxyMember(item.Name, item.ParameterType));
             }
         }
+
+        //private void FindParameters(MethodInfo info)
+        //{
+        //    foreach (var item in info.GetParameters())
+        //    {
+        //        var isOutParameter = item.IsOut;
+        //        if (isOutParameter)
+        //            continue;
+
+        //        string TypeName = item.ParameterType.ToString().ToLower();
+        //        Type pType = item.ParameterType;
+        //        if ((
+        //            pType.IsByRef || item.IsOut ///////////////////////////////////////////////
+        //            || pType.IsEnum || pType.IsInterface)
+        //            ||
+        //            (!TypeName.StartsWith("system.") && TypeName.EndsWith("[]")) ||
+        //            (TypeName.StartsWith("system.") && TypeName.EndsWith("[]")))
+        //        {
+        //            // skip to next param
+        //            //throw new Exception(string.Format(ErrorTypeMessage, item.Name, item.ParameterType.ToString(), info.Name));
+        //        }
+        //        else if (!TypeName.StartsWith("system."))
+        //        {
+        //            foreach (var prop in pType.GetProperties(BindingFlags.Public))
+        //            {
+        //                Type propType = prop.PropertyType;
+        //                if ((pType.IsByRef || pType.IsEnum || pType.IsInterface) ||
+        //                    (!TypeName.StartsWith("system.")) ||
+        //                    (TypeName.StartsWith("system.") && TypeName.EndsWith("[]")))
+        //                    throw new Exception(string.Format(ErrorTypeMessage, item.Name, item.ParameterType.ToString(), info.Name));
+        //                else this.ServiceParameters.Add(new ProxyMember(prop.Name, prop.PropertyType));
+        //            }
+        //        }
+        //        else this.ServiceParameters.Add(new ProxyMember(item.Name, item.ParameterType));
+        //    }
+        //}
 
         private void FindResults(MethodInfo info)
         {
@@ -112,7 +176,6 @@ namespace SoapParserApi.ProxyRepository
                     }
                     else
                     {
-                        return;
                         // TODO: ex: system.string[] ro ham support kon
                         throw new Exception(string.Format(ErrorTypeMessage, item.Name, item.PropertyType.ToString(), info.Name));
                     }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace SoapParserApi.ProxyRepository
 {
@@ -15,7 +11,6 @@ namespace SoapParserApi.ProxyRepository
         public Type Type { get; set; }
         public object Value { get; set; }
         public bool IsHidden { get; set; }
-
         #endregion
 
         #region Ctors

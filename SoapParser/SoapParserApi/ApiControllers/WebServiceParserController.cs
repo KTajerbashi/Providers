@@ -8,6 +8,7 @@ namespace SoapParserApi.ApiControllers
     public class WebServiceParserController : ApiController
     {
         [HttpGet]
+        [Route("ParseService")]
         public IHttpActionResult ImportService()
         {
             ProxyFactory proxyFactory = new ProxyFactory();
@@ -16,34 +17,9 @@ namespace SoapParserApi.ApiControllers
             string password = "";
             bool isSSLIgnore = true;
             ProxyService result = proxyFactory.ImportService(endpointUrl, username, password, isSSLIgnore);
-            var ss = result.ServiceMethods.Values;
 
-            WebServiceModel aggregate = new WebServiceModel();
 
-            aggregate.Name = result.ServiceName;
-            foreach (var method in result.ServiceMethods)
-            {
-                var record = new WebServiceMethodModel();
-                record.Name = method.Key;
-                foreach (var detail in method.Value.ServiceParameters)
-                {
-                    record.Parameters.Add(new WebServiceParameterModel()
-                    {
-                        Name = detail.Name,
-                        Type = detail.Type.ToString()
-                    });
-                }
-                foreach (var detail in method.Value.ServiceResults)
-                {
-                    record.Results.Add(new WebServiceParameterModel()
-                    {
-                        Name = detail.Name,
-                        Type = detail.Type.ToString()
-                    });
-                }
-                aggregate.Methods.Add(record);
-            }
-            return Ok(aggregate);
+            return Ok(WebServiceModel.SetService(result));
 
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace SoapParserWCF
@@ -51,7 +50,6 @@ namespace SoapParserWCF
         private bool isActive;
         private string mobile;
         private int age;
-        private List<Address> addresses;
 
         [DataMember]
         public string Username
@@ -87,25 +85,5 @@ namespace SoapParserWCF
             get { return age; }
             set { age = value; }
         }
-
-        [DataMember]
-        public List<Address> Addresses
-        {
-            get { return addresses; }
-            set { addresses = value; }
-        }
-    }
-
-    [DataContract]
-    public class Address
-    {
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string Pelak { get; set; }
-
-        [DataMember]
-        public string HouseNumber { get; set; }
     }
 }
