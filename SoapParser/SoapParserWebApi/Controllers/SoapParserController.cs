@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SoapParser;
-using SoapParserWebApi.Extensions;
-using SoapParserWebApi.Models;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace SoapParserWebApi.Controllers
