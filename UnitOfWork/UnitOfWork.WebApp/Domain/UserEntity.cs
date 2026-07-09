@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.RegularExpressions;
 using UnitOfWork.WebApp.Common;
 
 namespace UnitOfWork.WebApp.Domain;
@@ -7,10 +6,7 @@ namespace UnitOfWork.WebApp.Domain;
 [Table("Users", Schema = "Security")]
 public class UserEntity : AggregateRoot
 {
-    private UserEntity()
-    {
-
-    }
+    private UserEntity() { }
 
     public UserEntity(
         string firstName,
@@ -46,7 +42,7 @@ public class UserEntity : AggregateRoot
         if (_userRoles.Any(x => x.RoleId == role.Id))
             throw new InvalidOperationException("Role already assigned.");
 
-        var userRole = new UserRoleEntity(Id, role.Id);
+        var userRole = new UserRoleEntity(Id, role);
 
         _userRoles.Add(userRole);
 
@@ -88,6 +84,12 @@ public class UserRoleEntity : Entity
         RoleId = roleId;
     }
 
+    public UserRoleEntity(int userId, RoleEntity role)
+    {
+        UserId = userId;
+        RoleEntity = role;
+    }
+
     private readonly List<UserRoleGroupEntity> _userRoleGroups = new();
     public virtual IReadOnlyCollection<UserRoleGroupEntity> UserRoleGroups => _userRoleGroups;
 
@@ -96,7 +98,7 @@ public class UserRoleEntity : Entity
         if (_userRoleGroups.Any(x => x.GroupId == group.Id))
             throw new InvalidOperationException("Group already assigned.");
 
-        var userRoleGroup = new UserRoleGroupEntity(Id, group.Id);
+        var userRoleGroup = new UserRoleGroupEntity(Id, group);
 
         _userRoleGroups.Add(userRoleGroup);
 
@@ -127,12 +129,20 @@ public class GroupEntity : AggregateRoot
 
         _userRoleGroups.Add(new(userRoleId, Id));
     }
+
+    public void AddUserRole(UserRoleEntity userRole)
+    {
+        if (_userRoleGroups.Any(x => x.UserRoleId == userRole.Id))
+            return;
+
+        _userRoleGroups.Add(new(userRole, Id));
+    }
     public void AddPrivilege(PrivilegeEntity privilege)
     {
         if (_groupPrivileges.Any(x => x.PrivilegeId == privilege.Id))
             return;
 
-        _groupPrivileges.Add(new GroupPrivilegeEntity(Id, privilege.Id));
+        _groupPrivileges.Add(new GroupPrivilegeEntity(Id, privilege));
     }
 }
 
@@ -150,6 +160,17 @@ public class UserRoleGroupEntity : Entity
     public UserRoleGroupEntity(int userRoleId, int groupId)
     {
         UserRoleId = userRoleId;
+        GroupId = groupId;
+    }
+    public UserRoleGroupEntity(int userRoleId, GroupEntity group)
+    {
+        UserRoleId = userRoleId;
+        GroupEntity = group;
+    }
+
+    public UserRoleGroupEntity(UserRoleEntity userRole, int groupId)
+    {
+        UserRoleEntity = userRole;
         GroupId = groupId;
     }
 
@@ -182,6 +203,12 @@ public class GroupPrivilegeEntity : Entity
     {
         GroupId = groupId;
         PrivilegeId = privilegeId;
+    }
+
+    public GroupPrivilegeEntity(int groupId, PrivilegeEntity privilege)
+    {
+        GroupId = groupId;
+        PrivilegeEntity = privilege;
     }
 
     public int GroupId { get; private set; }

@@ -65,4 +65,46 @@ public class UserController : BaseController
 
         return Ok(ModelState);
     }
+
+    [HttpPost("Handler-Virtual")]
+    public async Task<IActionResult> HandlerVirtual(CancellationToken cancellation)
+    {
+        await _userRepository.BeginTransactionAsync(cancellation);
+        try
+        {
+
+            UserEntity userEntity = new("Kamran", "Tajerbashi", "kamran-tajer", "@Tajer123");
+            var userEntityId = await _userRepository.AddAsync(userEntity, cancellation);
+
+            RoleEntity roleEntity = new("User", "User");
+            var roleEntityId = await _roleRepository.AddAsync(roleEntity, cancellation);
+
+            var userRoleRecord = userEntity.AssignRole(roleEntity);
+
+            GroupEntity groupEntity = new("AdminGroup", "Admin");
+            var groupEntityId = await _groupRepository.AddAsync(groupEntity, cancellation);
+
+            userRoleRecord.AssignGroup(groupEntity);
+
+            PrivilegeEntity privilegeEntity = new("CreateUser", "Security.User.Create");
+            var privilegeEntityId = await _privilegeRepository.AddAsync(privilegeEntity, cancellation);
+
+            groupEntity.AddPrivilege(privilegeEntity);
+
+            var userAggregate = await _userRepository.Aggregates.Include(x => x.UserRoles).FirstOrDefaultAsync(x => x.EntityId == userEntityId, cancellation);
+
+            //groupEntity.AddUserRole(userRoleRecord);
+
+            await _roleRepository.CommitTransactionAsync(cancellation);
+
+        }
+        catch (Exception ex)
+        {
+            await _groupRepository.RollbackTransactionAsync(cancellation);
+            throw ex;
+        }
+
+        return Ok(ModelState);
+    }
+
 }
