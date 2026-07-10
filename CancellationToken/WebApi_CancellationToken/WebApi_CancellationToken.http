@@ -1,0 +1,6 @@
+@WebApi_CancellationToken_HostAddress = http://localhost:5183
+
+GET {{WebApi_CancellationToken_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
