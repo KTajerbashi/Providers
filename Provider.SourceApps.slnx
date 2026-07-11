@@ -4,8 +4,7 @@
     <Project Path="Apps/SwaggerLibrary/SwaggerLibrary.csproj" Id="93f34e89-bdd9-49ac-b758-f4f1ab14d4b6" />
   </Folder>
   <Folder Name="/CancellationToken/">
-    <Project Path="CancellationToken/ConsoleApp_CancellationToken/ConsoleApp_CancellationToken.csproj" Id="c7bac4fa-a624-45c5-b379-159e3bc7557d" />
-    <Project Path="CancellationToken/WebApi_CancellationToken/WebApi_CancellationToken.csproj" Id="8ae22ca7-2e3e-4b0d-8a52-338a0ab210f3" />
+    <Project Path="CancellationToken/CT.WebApi/CT.WebApi.csproj" Id="2c98a388-1282-4ad9-ba25-7308c3b39a3e" />
   </Folder>
   <Folder Name="/ConsoleApps/">
     <Project Path="ConsoleApps/HttpRequestHandler/HttpRequestHandler.csproj" Id="1531ee40-2e65-4a0d-b9e6-0513f4097f12" />
