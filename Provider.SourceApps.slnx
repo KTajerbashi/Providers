@@ -9,6 +9,10 @@
   <Folder Name="/ConsoleApps/">
     <Project Path="ConsoleApps/HttpRequestHandler/HttpRequestHandler.csproj" Id="1531ee40-2e65-4a0d-b9e6-0513f4097f12" />
   </Folder>
+  <Folder Name="/SoapOnWebApi/">
+    <Project Path="SoapOnWebApi/SoapOnWebApi.Soaps/SoapOnWebApi.Soaps.csproj" Id="95b718a9-3a49-4ebd-acd0-751f49b95464" />
+    <Project Path="SoapOnWebApi/SoapOnWebApi.WebApi/SoapOnWebApi.WebApi.csproj" Id="0e894db2-fd71-45b4-bfae-80133ce63b42" />
+  </Folder>
   <Folder Name="/SoapParser/">
     <Project Path="SoapParser/SoapParserApi/SoapParserApi.csproj" Id="296ef556-07f0-421b-bb85-baaf2224d823" />
     <Project Path="SoapParser/SoapParserWCF/SoapParserWCF.csproj" Id="0827498c-c7f4-41cb-8d92-a6f7eafad0dd" />

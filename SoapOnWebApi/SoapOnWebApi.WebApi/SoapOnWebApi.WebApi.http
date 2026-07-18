@@ -1,0 +1,6 @@
+@SoapOnWebApi.WebApi_HostAddress = http://localhost:5289
+
+GET {{SoapOnWebApi.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
