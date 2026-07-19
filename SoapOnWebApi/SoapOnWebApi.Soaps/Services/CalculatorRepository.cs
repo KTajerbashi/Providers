@@ -1,39 +1,59 @@
 ﻿using SoapOnWebApi.Soaps.Contracts;
+using SoapOnWebApi.Soaps.Models;
+using System.ServiceModel;
 
 namespace SoapOnWebApi.Soaps.Services;
 
-public class CalculatorRepository : ICalculatorRepository
+// Presentation/Soap/Services/CustomerSoapService.cs
+public class CustomerSoapService : ICustomerSoapService
 {
-    public async Task<int> Divided(int a, int b)
-    {
 
-        return await Task.Run(() =>
-        {
-            return a / b;
-        });
+    public CustomerSoapService()
+    {
     }
 
-    public async Task<int> Multiply(int a, int b)
+    public async Task<CustomerSoapDto> GetCustomerAsync(int customerId)
     {
-        return await Task.Run(() =>
+        CustomerSoapDto result = new()
         {
-            return a * b;
-        });
+            Id = 1,
+            Email = $"{customerId}@mail.com",
+            Name = $"{customerId} : Name"
+        };
+        if (result is null)
+            throw new FaultException($"Customer with id {customerId} not found.");
+
+        return new CustomerSoapDto
+        {
+            Id = result.Id,
+            Name = result.Name,
+            Email = result.Email
+        };
     }
 
-    public async Task<int> Sub(int a, int b)
+    public async Task<CustomerSoapDto[]> GetAllCustomersAsync()
     {
-        return await Task.Run(() =>
+        CustomerSoapDto result1 = new()
         {
-            return a - b;
-        });
+            Id = 1,
+            Email = $"{Guid.NewGuid()}@mail.com",
+            Name = $"{Guid.NewGuid()} : Name"
+        };
+        CustomerSoapDto result2 = new()
+        {
+            Id = 2,
+            Email = $"{Guid.NewGuid()}@mail.com",
+            Name = $"{Guid.NewGuid()} : Name"
+        };
+        List<CustomerSoapDto> res = new();
+        res.Add(result1);
+        res.Add(result2);
+        return res.ToArray();
     }
 
-    public async Task<int> Sum(int a, int b)
+    public async Task<int> CreateCustomerAsync(CreateCustomerSoapRequest request)
     {
-        return await Task.Run(() =>
-        {
-            return a + b;
-        });
+        await Task.CompletedTask;
+        return 1;
     }
 }

@@ -1,7 +1,18 @@
-﻿namespace SoapOnWebApi.Soaps.Models;
+﻿using System.Runtime.Serialization;
 
-public static class CalculatorModels
+namespace SoapOnWebApi.Soaps.Models;
+
+[DataContract]
+public class CustomerSoapDto
 {
-    public class Request() { }
-    public class Response() { }
+    [DataMember] public int Id { get; set; }
+    [DataMember] public string Name { get; set; } = string.Empty;
+    [DataMember] public string Email { get; set; } = string.Empty;
+}
+
+[DataContract]
+public class CreateCustomerSoapRequest
+{
+    [DataMember] public string Name { get; set; } = string.Empty;
+    [DataMember] public string Email { get; set; } = string.Empty;
 }
